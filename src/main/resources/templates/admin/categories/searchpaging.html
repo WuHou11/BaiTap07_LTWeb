@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{admin/layout-admin.html}">
+	layout:decorate="~{admin/layout_admin.html}">
+<head>
+    <title>Category List</title>
+</head>
 
 <section class="row" layout:fragment="content">
 	<div class="col mt-4">
@@ -18,7 +21,7 @@
 				<!-- Thanh tìm kiếm + Nút thêm -->
 				<div class="row mt-2 mb-2">
 					<div class="col-md-6">
-						<form th:action="@{/admin/categories/searchpaginated}">
+						<form th:action="@{/admin/categories/searchpaging}">
 							<div class="input-group">
 								<input type="text" class="form-control ml-2" name="name"
 									id="name" placeholder="Nhập từ khóa để tìm" />
@@ -98,7 +101,7 @@
 								<li
 									th:class="${1 == categoryPage.number + 1} ? 'page-item active' : 'page-item'">
 									<a
-									th:href="@{/admin/categories/searchpaginated(name=${name},size=${categoryPage.size},page=1)}"
+									th:href="@{/admin/categories/searchpaging(name=${name},size=${categoryPage.size},page=1)}"
 									class="page-link">First</a>
 								</li>
 
@@ -106,7 +109,7 @@
 								<li th:each="pageNumber : ${pageNumbers}"
 									th:class="${pageNumber == categoryPage.number + 1} ? 'page-item active' : 'page-item'">
 									<a
-									th:href="@{/admin/categories/searchpaginated(name=${name},size=${categoryPage.size},page=${pageNumber})}"
+									th:href="@{/admin/categories/searchpaging(name=${name},size=${categoryPage.size},page=${pageNumber})}"
 									class="page-link" th:text="${pageNumber}"></a>
 								</li>
 
@@ -114,7 +117,7 @@
 								<li
 									th:class="${categoryPage.totalPages == categoryPage.number + 1} ? 'page-item active' : 'page-item'">
 									<a
-									th:href="@{/admin/categories/searchpaginated(name=${name},size=${categoryPage.size},page=${categoryPage.totalPages})}"
+									th:href="@{/admin/categories/searchpaging(name=${name},size=${categoryPage.size},page=${categoryPage.totalPages})}"
 									class="page-link">Last</a>
 								</li>
 

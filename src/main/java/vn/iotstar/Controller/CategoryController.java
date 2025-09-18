@@ -1,4 +1,4 @@
-package vn.iotstar.Controller.admin;
+package vn.iotstar.Controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,14 +39,14 @@ public class CategoryController {
 		CategoryModel cateModel = new CategoryModel();
 		cateModel.setIsEdit(false);
 		model.addAttribute("category", cateModel);
-		return "admin/categories/addOrEdit";
+		return "admin/categories/AddOrEdit";
 	}
 
 	@PostMapping("saveOrUpdate")
 	public ModelAndView saveOrUpdate(ModelMap model, @Valid @ModelAttribute("category") CategoryModel cateModel,
 			BindingResult result) {
 		if (result.hasErrors()) {
-			return new ModelAndView("admin/categories/addOrEdit");
+			return new ModelAndView("admin/categories/AddOrEdit");
 		}
 
 		CategoryEntity entity = new CategoryEntity();
@@ -56,7 +56,7 @@ public class CategoryController {
 		String message = cateModel.getIsEdit() ? "Category is Edited!!!!!!!" : "Category is saved!!!!!!!";
 		model.addAttribute("message", message);
 
-		return new ModelAndView("forward:/admin/categories/searchpaginated", model);
+		return new ModelAndView("forward:/admin/categories/searchpaging", model);
 	}
 
 	@RequestMapping("")
@@ -75,7 +75,7 @@ public class CategoryController {
 			BeanUtils.copyProperties(entity, cateModel);
 			cateModel.setIsEdit(true);
 			model.addAttribute("category", cateModel);
-			return new ModelAndView("admin/categories/addOrEdit", model);
+			return new ModelAndView("admin/categories/AddOrEdit", model);
 		}
 		model.addAttribute("message", "Category is not exist!!!!");
 		return new ModelAndView("forward:/admin/categories", model);
@@ -85,7 +85,7 @@ public class CategoryController {
 	public ModelAndView delete(ModelMap model, @PathVariable("categoryId") Long categoryId) {
 		categoryService.deleteById(categoryId);
 		model.addAttribute("message", "category is deleted!!!!");
-		return new ModelAndView("forward:/admin/categories/searchpaginated", model);
+		return new ModelAndView("forward:/admin/categories/searchpaging", model);
 	}
 
 	@GetMapping("search")
@@ -100,7 +100,7 @@ public class CategoryController {
 		return "admin/categories/search";
 	}
 
-	@RequestMapping("searchpaginated")
+	@RequestMapping("searchpaging")
 	public String search(ModelMap model, @RequestParam(name = "name", required = false) String name,
 			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
 
@@ -135,7 +135,7 @@ public class CategoryController {
 		}
 
 		model.addAttribute("categoryPage", resultPage);
-		return "admin/categories/searchpaginated";
+		return "admin/categories/searchpaging";
 	}
 
 }
